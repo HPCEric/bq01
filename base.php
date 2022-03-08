@@ -129,3 +129,9 @@ $News=new DB('news');
 $Title=new DB('title');
 $Total=new DB('total');
 
+if(!isset($_SESSION['total'])){
+    $total=$Total->find(1);
+    $total['total']++;
+    $Total->save($total);
+    $_SESSION['total']=$total['total'];
+}
