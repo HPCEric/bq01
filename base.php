@@ -128,3 +128,4 @@ $Mvim=new DB('mvim');
 $News=new DB('news');
 $Title=new DB('title');
 $Total=new DB('total');
+
