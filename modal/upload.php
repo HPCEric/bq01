@@ -1,12 +1,19 @@
-<h3>更新標題圖片</h3>
+<?php
+include_once "../base.php";
+?>
+<h3>更新<?= $DB->upload; ?></h3>
 <hr>
-<form action="api/edit.php?do=<?=$DB->table;?>" method="post" enctype="multipart/form-data">
+<form action="api/edit.php" method="post" enctype="multipart/form-data">
     <table>
         <tr>
-            <td>標題圖片:</td>
+            <td><?= $DB->upload; ?></td>
             <td><input type="file" name="img"></td>
         </tr>
-        
+
     </table>
-    <div><input type="submit" value="新增"><input type="reset" value="重置"></div>
+    <input type="hidden" name="id" value="<?= $_GET['id'] ?>">
+    <div>
+        <input type="submit" value="更新">
+        <input type="reset" value="重置">
+    </div>
 </form>
