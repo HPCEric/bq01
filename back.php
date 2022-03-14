@@ -24,8 +24,9 @@ include_once "base.php";
 	</div>
 	<div id="main">
 		<a title="" href="?">
-			<div class="ti" style="background:url(&#39;use/&#39;); background-size:cover;"></div>
-			<!--標題-->
+			<div class="ti" style="background:url(&#39;use/&#39;); background-size:cover;">
+<img src="./img/<?=$Title->find(['sh'=>1])['img'];?>" alt="">
+			</div>
 		</a>
 		<div id="ms">
 			<div id="lf" style="float:left;">

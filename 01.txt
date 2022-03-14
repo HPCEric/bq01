@@ -1,0 +1,24 @@
+title
+圖 / TEXT / SH / DEL / UPDATE
+
+ad
+TEXT / SH / DEL
+
+mvim
+圖 / sh / del / update
+
+image
+圖 / sh / del / update
+
+news
+TEXT / SH / del 
+
+admin
+acc / pw / del
+
+menu
+TEXT / href / sh / del / update
+
+
+back檔 處理更新的部分
+modal 處理新增的部分
