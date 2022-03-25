@@ -1,26 +1,26 @@
 <?php
-date_default_timezone_set('Asia/Taipei');
+date_default_timezone_set("Asia/Taipei");
 session_start();
 
 class DB
 {
     protected $dsn = "mysql:host=localhost;charset=utf8;dbname=web01",
-        $pdo;
 
-    public $table;
-    public $title;
-    public $botton;
-    public $header;
-    public $append;
-    public $upload;
+        $pdo;
+    public $table;   //資料表名稱
+    public $title;   //後台功能名稱
+    public $button;  //新增功能按鈕
+    public $header;  //列表第一欄標題
+    public $append;  //列表第二欄標題
+    public $upload;  //更新圖片彈出視窗用
 
     function __construct($table)
     {
         $this->table = $table;
         $this->pdo = new PDO($this->dsn, $this->user = 'root', $this->pw = '');
-
         $this->setStr($table);
     }
+
 
     private function setStr($table)
     {
@@ -54,7 +54,7 @@ class DB
                 $this->button = "";
                 $this->header = "進站總人數:";
                 break;
-            case "bottom":
+            case "botttom":
                 $this->title = "頁尾版權資料管理";
                 $this->button = "";
                 $this->header = "頁尾版權資料";
@@ -79,7 +79,6 @@ class DB
         }
     }
 
-
     function find($id)
     {
         $sql = "SELECT * FROM $this->table WHERE ";
@@ -97,6 +96,7 @@ class DB
     function all(...$arg)
     {
         $sql = "SELECT * FROM $this->table ";
+
         switch (count($arg)) {
             case 1:
                 if (is_array($arg[0])) {
@@ -119,9 +119,10 @@ class DB
         return $this->pdo->query($sql)->fetchAll(PDO::FETCH_ASSOC);
     }
 
-    function math($m, $c, ...$arg)
+    function math($method, $col, ...$arg)
     {
-        $sql = "SELECT $m($c) FROM $this->table ";
+        $sql = "SELECT $method($col) FROM $this->table ";
+
         switch (count($arg)) {
             case 1:
                 if (is_array($arg[0])) {
@@ -142,7 +143,6 @@ class DB
         }
         return $this->pdo->query($sql)->fetchColumn();
     }
-
     function save($array)
     {
         //update
@@ -155,11 +155,10 @@ class DB
             //insert
             $col = implode("`,`", array_keys($array));
             $values = implode("','", $array);
-            $sql = "INSERT INTO $this->table (`$col`) VALUES ('$values')";
+            $sql = "INSERT INTO $this->table (`$col`) VALUES ('$values') ";
         }
         return $this->pdo->exec($sql);
     }
-
     function del($id)
     {
         $sql = "DELETE FROM $this->table WHERE ";
@@ -175,11 +174,10 @@ class DB
     }
 }
 
-
 function dd($array)
 {
     echo "<pre>";
-    print_r($array);
+    echo print_r($array);
     echo "</pre>";
 }
 
@@ -188,51 +186,53 @@ function to($url)
     header("location:" . $url);
 }
 
-$Title = new DB('title');
 $Ad = new DB('ad');
-$Mvim = new DB('mvim');
-$Image = new DB('image');
-$News = new DB('news');
 $Admin = new DB('admin');
-$Menu = new DB('menu');
 $Bottom = new DB('bottom');
+$Image = new DB('image');
+$Menu = new DB('menu');
+$Mvim = new DB('mvim');
+$News = new DB('news');
+$Title = new DB('title');
 $Total = new DB('total');
-
-$tt = $_GET['do'] ?? '';
-
-switch ($tt) {
-    case "ad":
-        $DB = $Ad;
-        break;
-    case "mvim":
-        $DB = $Mvim;
-        break;
-    case "image":
-        $DB = $Image;
-        break;
-    case "total":
-        $DB = $Total;
-        break;
-    case "bottom":
-        $DB = $Bottom;
-        break;
-    case "news":
-        $DB = $News;
-        break;
-    case "admin":
-        $DB = $Admin;
-        break;
-    case "menu":
-        $DB = $Menu;
-        break;
-    default:
-        $DB = $Title;
-        break;
-}
 
 if (!isset($_SESSION['total'])) {
     $total = $Total->find(1);
     $total['total']++;
     $Total->save($total);
     $_SESSION['total'] = $total['total'];
+}
+
+
+
+$tt=$_GET['do']??'';  //取得網址參數do的值
+
+switch($tt){   //利用網址參數來轉換$DB代表的資料表
+    case "ad":
+        $DB=$Ad;
+    break;
+    case "mvim":
+        $DB=$Mvim;
+    break;
+    case "image":
+        $DB=$Image;
+    break;
+    case "total":
+        $DB=$Total;
+    break;
+    case "bottom":
+        $DB=$Bottom;
+    break;
+    case "news":
+        $DB=$News;
+    break;
+    case "admin":
+        $DB=$Admin;
+    break;
+    case "menu":
+        $DB=$Menu;
+    break;
+    default:
+        $DB=$Title;
+    break;
 }
