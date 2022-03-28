@@ -23,7 +23,7 @@ include_once "base.php";
 		</div>
 	</div>
 	<div id="main">
-		<?php 
+		<?php
 		include "front/header.php";
 		?>
 		<div id="ms">
@@ -47,54 +47,67 @@ include_once "base.php";
 				include "./front/main.php";
 			}
 			?>
-			<div id="alt" style="position: absolute; width: 350px; min-height: 100px; word-break:break-all; text-align:justify;  background-color: rgb(255, 255, 204); top: 50px; left: 400px; z-index: 99; display: none; padding: 5px; border: 3px double rgb(255, 153, 0); background-position: initial initial; background-repeat: initial initial;"></div>
-			<script>
-				$(".sswww").hover(
-					function() {
-						$("#alt").html("" + $(this).children(".all").html() + "").css({
-							"top": $(this).offset().top - 50
-						})
-						$("#alt").show()
-					}
-				)
-				$(".sswww").mouseout(
-					function() {
-						$("#alt").hide()
-					}
-				)
-			</script>
+
 			<div class="di di ad" style="height:540px; width:23%; padding:0px; margin-left:22px; float:left; ">
 				<!--右邊-->
 				<button style="width:100%; margin-left:auto; margin-right:auto; margin-top:2px; height:50px;" onclick="lo(&#39;?do=login&#39;)">管理登入</button>
 				<div style="width:89%; height:480px;" class="dbor">
-					<span class="t botli">校園映象區</span>
-					<script>
-						var nowpage = 0,
-							num = 0;
+					<span class="t botli">
+						校園映象區
+					</span>
 
-						function pp(x) {
-							var s, t;
-							if (x == 1 && nowpage - 1 >= 0) {
-								nowpage--;
-							}
-							if (x == 2 && (nowpage + 1) * 3 <= num * 1 + 3) {
-								nowpage++;
-							}
-							$(".im").hide()
-							for (s = 0; s <= 2; s++) {
-								t = s * 1 + nowpage * 1;
-								$("#ssaa" + t).show()
-							}
-						}
-						pp(1)
-					</script>
+					<div class="t" onclick="pp(1)">
+						<img src="icon/up.jpg">
+					</div>
+
+					<?php
+					//撈出所有需要顯示的校園映像資料 
+					$imgs = $Image->all(['sh' => 1]);
+
+					//使用迴圈把所有圖片的檔名及路徑印出來
+					foreach ($imgs as $key => $img) {
+					?>
+						<!--內建的js程式會使用 `.im` 來使所有的圖片先隱藏，因此我們在這加上 `.im` 這個樣式；
+        內建的js程式會使用到`ssaa`字串加上一個數值做為id，因此我們利用迴圈的`\$key`來建置
+        每張圖片不同的id-->
+						<div class="im cent" id="ssaa<?= $key; ?>">
+
+							<!--依據題意前台顯示的圖片要有150px*103px，邊框及邊距可以自己決定要不要加-->
+							<img src="img/<?= $img['img']; ?>" style="width:150px;height:103px;border:3px solid orange;margin:1px">
+						</div>
+					<?php } ?>
+
+					<div class="t" class="t" onclick="pp(2)">
+						<img src="icon/dn.jpg">
+					</div>
+
+					<script>
+                    var nowpage = 0,
+                        num = <?=$Image->math("count","*",['sh'=>1]);?>;
+
+                    function pp(x) {
+                        var s, t;
+                        if (x == 1 && nowpage - 1 >= 0) {
+                            nowpage--;
+                        }
+                        if (x == 2 && (nowpage + 3) < num) {
+                            nowpage++;
+                        }
+                        $(".im").hide()
+                        for (s = 0; s <= 2; s++) {
+                            t = s * 1 + nowpage * 1;
+                            $("#ssaa" + t).show()
+                        }
+                    }
+                    pp(1)
+                    </script>
 				</div>
 			</div>
 		</div>
 		<div style="clear:both;"></div>
 		<div style="width:1024px; left:0px; position:relative; background:#FC3; margin-top:4px; height:123px; display:block;">
 			<span class="t" style="line-height:123px;">
-				<?=$Bottom->find(1)['bottom']; ?>
+				<?= $Bottom->find(1)['bottom']; ?>
 			</span>
 		</div>
 	</div>
