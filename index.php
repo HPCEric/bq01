@@ -30,7 +30,33 @@ include_once "base.php";
 			<div id="lf" style="float:left;">
 				<div id="menuput" class="dbor">
 					<!--主選單放此-->
-					<span class="t botli">主選單區</span>
+					<span class="t botli">
+						主選單區
+					</span>
+
+					<?php
+					$mains = $Menu->all(["sh" => 1, "parent" => 0]);
+
+					foreach ($mains as $main) {
+						echo "<div class='mainmu'>";
+						echo "<a href='{$main['href']}'>{$main['name']}</a>";
+
+						// 次選單
+						if ($Menu->math('count', '*', ['parent' => $main['id']]) > 0) {
+							echo "  <div class='mw'>";
+							$subs = $Menu->all(['parent' => $main['id']]);
+							foreach ($subs as $sub) {
+								echo "<div class='mainmu2'>";
+								echo "    <a  href='{$sub['href']}'>{$sub['name']}</a>";
+								echo "</div>";
+							}
+							echo "  </div>";
+						}
+						echo "</div>";
+					}
+
+					?>
+
 				</div>
 				<div class="dbor" style="margin:3px; width:95%; height:20%; line-height:100px;">
 					<span class="t">進站總人數 :
@@ -82,25 +108,25 @@ include_once "base.php";
 					</div>
 
 					<script>
-                    var nowpage = 0,
-                        num = <?=$Image->math("count","*",['sh'=>1]);?>;
+						var nowpage = 0,
+							num = <?= $Image->math("count", "*", ['sh' => 1]); ?>;
 
-                    function pp(x) {
-                        var s, t;
-                        if (x == 1 && nowpage - 1 >= 0) {
-                            nowpage--;
-                        }
-                        if (x == 2 && (nowpage + 3) < num) {
-                            nowpage++;
-                        }
-                        $(".im").hide()
-                        for (s = 0; s <= 2; s++) {
-                            t = s * 1 + nowpage * 1;
-                            $("#ssaa" + t).show()
-                        }
-                    }
-                    pp(1)
-                    </script>
+						function pp(x) {
+							var s, t;
+							if (x == 1 && nowpage - 1 >= 0) {
+								nowpage--;
+							}
+							if (x == 2 && (nowpage + 3) < num) {
+								nowpage++;
+							}
+							$(".im").hide()
+							for (s = 0; s <= 2; s++) {
+								t = s * 1 + nowpage * 1;
+								$("#ssaa" + t).show()
+							}
+						}
+						pp(1)
+					</script>
 				</div>
 			</div>
 		</div>
