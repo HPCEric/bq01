@@ -24,10 +24,9 @@ include_once "base.php";
 		</div>
 	</div>
 	<div id="main">
-		<a title="" href="?">
-			<div class="ti" style="background:url('img/<?=$Title->find(['sh'=>1])['img'];?>'); background-size:cover;"></div>
-			<!--標題-->
-		</a>
+		<?php
+		include "front/header.php";
+		?>
 		<div id="ms">
 			<div id="lf" style="float:left;">
 				<div id="menuput" class="dbor">
@@ -118,7 +117,7 @@ include_once "base.php";
 		<div style="clear:both;"></div>
 		<div style="width:1024px; left:0px; position:relative; background:#FC3; margin-top:4px; height:123px; display:block;">
 			<span class="t" style="line-height:123px;">
-				<?=$Bottom->find(1)['bottom']; ?>
+				<?= $Bottom->find(1)['bottom']; ?>
 			</span>
 		</div>
 	</div>
