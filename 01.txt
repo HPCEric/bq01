@@ -22,3 +22,9 @@ TEXT / href / sh / del / update
 
 back檔 處理更新的部分
 modal 處理新增的部分
+
+back->table > del/sh/text > api/edit.php
+
+back->table > renew pic > modal/upload.php > api/upload.php
+
+back->table > add col > modal/$DB->table > api/add.php

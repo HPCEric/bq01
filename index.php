@@ -23,9 +23,10 @@ include_once "base.php";
 		</div>
 	</div>
 	<div id="main">
-		<a title="" href="./home_files/home.htm">
-			<div class="ti" style="background:url(&#39;use/&#39;); background-size:cover;"></div>
+		<a title="" href="index.php">
+			<div class="ti" style="background:url('img/<?=$Title->find(['sh'=>1])['img'];?>'); background-size:cover;"></div>
 			<!--標題-->
+			
 		</a>
 		<div id="ms">
 			<div id="lf" style="float:left;">
